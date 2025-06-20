@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>墨刀 - 创新驱动未来</title>
+    <style>
+        /* CSS变量定义 - 全局颜色和样式变量
+ * 使用CSS变量实现主题颜色的统一管理
+ * 包含主色、次色、文本颜色等基础样式变量
+ * 便于后续主题定制和样式维护
+ */
+        :root {
+            --primary-color: #4285F4;    /* 主题色 */
+            --secondary-color: #E8F0FE;   /* 次要主题色 */
+            --text-dark: #202124;         /* 深色文本 */
+            --text-gray: #5F6368;         /* 灰色文本 */
+            --text-light: #9AA0A6;        /* 浅色文本 */
+            --border-color: #E8EAED;      /* 边框颜色 */
+            --white: #FFFFFF;             /* 白色 */
+            --gradient-bg: linear-gradient(135deg, #667eea 0%, #764ba2 100%);  /* 渐变背景 */
+        }
+
+        /* 全局基础样式重置和设置
+ * 重置所有元素的外边距和内边距
+ * 设置更合理的盒模型
+ * 定义全局字体和基础文本样式
+ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header - 页面顶部固定导航栏
+ * 包含logo、导航菜单和登录/注册按钮
+ * 使用固定定位确保始终显示在页面顶部
+ */
+        .header {
+            background: var(--white);
+            padding: 8px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            width: 150px;
+            height: 40px;
+            background-image: url('img/partner7.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 48px;
+            margin-left: -120px;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--text-gray);
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 8px 0;
+        }
+
+        .nav-menu a:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .btn {
+            padding: 6px 16px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            height: 32px;
+            box-sizing: border-box;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary-color);
+            border: none;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .btn-login {
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+        }
+
+        .btn-login:hover {
+            background: #3367D6;
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 48px;
+            line-height: 1;
+            margin-top: 20px;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section - 首页主视觉区域
+ * 包含主标题、描述文本、行动按钮和主视觉图片
+ * 使用网格布局实现左右两栏布局
+ */
+        .hero {
+            padding: 120px 0 80px;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-size: 72px;
+            font-weight: 800;
+            line-height: 1.3;
+            margin-bottom: 28px;
+            letter-spacing: -0.02em;
+            color: var(--text-dark);
+        }
+
+        .hero-text h1 .highlight {
+            color: var(--primary-color);
+            font-weight: 900;
+            position: relative;
+        }
+
+        .hero-text h1 br {
+            line-height: 1.8;
+            content: "";
+            display: block;
+            margin: 10px 0;
+        }
+
+        .hero-text p {
+            font-size: 16px;
+            color: var(--text-gray);
+            margin-bottom: 36px;
+            line-height: 1.7;
+            max-width: 480px;
+            font-weight: 400;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 24px;
+            margin-top: 40px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-gray);
+        }
+
+        .hero-image {
+            position: relative;
+            text-align: center;
+        }
+
+        .business-woman {
+            position: relative;
+            width: 100%;
+            height: 800px;
+            background-image: url('img/image.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .tablet-device {
+            position: absolute;
+            bottom: 60px;
+            right: 40px;
+            width: 60px;
+            height: 80px;
+            background: #333;
+            border-radius: 8px;
+            border: 2px solid #666;
+        }
+
+        .tablet-device::before {
+            content: "";
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 15px;
+            background: #4285F4;
+            border-radius: 4px;
+        }
+
+        .data-card {
+            position: absolute;
+            background: white;
+            padding: 20px 24px;
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+            top: 30px;
+            right: -80px;
+            min-width: 140px;
+            border: 1px solid rgba(66, 133, 244, 0.1);
+            z-index: 2;
+        }
+
+        .data-card .metric {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .data-card .metric::after {
+            content: "↗";
+            font-size: 20px;
+            color: #34A853;
+            background: rgba(52, 168, 83, 0.1);
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .data-card .label {
+            font-size: 13px;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        .chart-card {
+            position: absolute;
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+            bottom: 30px;
+            right: -80px;
+            width: 280px;
+            height: 180px;
+            border: 1px solid rgba(66, 133, 244, 0.1);
+            z-index: 2;
+        }
+
+        .chart-card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 4px;
+        }
+
+        .chart-card-subtitle {
+            font-size: 12px;
+            color: var(--text-gray);
+            margin-bottom: 16px;
+        }
+
+        .mini-chart {
+            width: 100%;
+            height: 80px;
+            position: relative;
+            background: linear-gradient(180deg, rgba(66, 133, 244, 0.05) 0%, rgba(66, 133, 244, 0.02) 100%);
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .chart-line-svg {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+        }
+
+        .chart-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chart-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .chart-change {
+            font-size: 14px;
+            color: #34A853;
+            font-weight: 600;
+            background: rgba(52, 168, 83, 0.1);
+            padding: 4px 8px;
+            border-radius: 12px;
+        }
+
+        .action-row {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            margin-top: 36px;
+        }
+
+        .user-verification {
+            position: relative;
+            display: inline-block;
+            margin-top: 20px;
+            text-align: center;
+            min-height: 60px;
+        }
+
+        .user-avatars {
+            width: 200px;
+            height: 40px;
+            background-image: url('img/partner13.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin-left: 20px;
+            margin-top: 20px;
+        }
+
+        .verification-text {
+            color: var(--text-gray);
+            font-size: 14px;
+            white-space: nowrap;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            z-index: 1;
+        }
+
+        .verification-number {
+            font-weight: 500;
+        }
+
+        /* Why Choose Us Section - 为什么选择我们
+ * 展示公司核心优势和特色
+ * 使用卡片式布局展示三个主要特点
+ */
+        .why-choose {
+            padding: 80px 0;
+            background: var(--white);
+            margin: 40px 0;
+        }
+
+        .why-choose .container {
+            background: var(--secondary-color);
+            border-radius: 24px;
+            padding: 60px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 20px;
+            color: var(--text-dark);
+        }
+
+        .section-subtitle {
+            font-size: 16px;
+            color: var(--text-gray);
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+            line-height: 1.6;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 32px;
+            border-radius: 16px;
+            text-align: left;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-color: transparent;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .feature-icon-1 {
+            background-image: url('img/partner10.png');
+        }
+
+        .feature-icon-2 {
+            background-image: url('img/partner11.png');
+        }
+
+        .feature-icon-3 {
+            background-image: url('img/partner12.png');
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-dark);
+            text-align: left;
+        }
+
+        .feature-desc {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.6;
+            text-align: left;
+        }
+
+        /* Product Features - 产品功能特点
+ * 展示产品的主要功能和优势
+ * 使用交错的图文布局增加视觉趣味性
+ * 每个功能点都包含标题和详细描述
+ */
+        .product-features {
+            padding: 80px 0;
+            background: var(--white);
+        }
+
+        .product-features .container {
+            display: flex;
+            flex-direction: column;
+            gap: 120px;
+        }
+
+        .feature-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .feature-row:nth-child(even) {
+            direction: rtl;
+        }
+
+        .feature-row:nth-child(even) .feature-content {
+            direction: ltr;
+        }
+
+        .feature-content {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .feature-item {
+            padding: 24px;
+            background: var(--white);
+            border-radius: 16px;
+            transition: all 0.3s;
+        }
+
+        .feature-item:hover {
+            transform: translateX(10px);
+        }
+
+        .feature-item.primary {
+            background: var(--primary-color);
+        }
+
+        .feature-item.primary h3 {
+            color: var(--white);
+        }
+
+        .feature-item.primary p {
+            color: var(--white);
+            opacity: 0.9;
+        }
+
+        .feature-item h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+        }
+
+        .feature-item p {
+            font-size: 14px;
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        .feature-visual {
+            width: 100%;
+            height: 600px;
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            margin-bottom: 40px;
+        }
+
+        .feature-visual-1 {
+            background-image: url('img/partner8.png');
+        }
+
+        .feature-visual-2 {
+            background-image: url('img/partner9.png');
+        }
+
+        .chart-placeholder {
+            width: 100%;
+            height: 300px;
+            background: white;
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .chart-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .chart-area {
+            height: 150px;
+            background: linear-gradient(180deg, rgba(66, 133, 244, 0.1) 0%, rgba(66, 133, 244, 0.05) 100%);
+            border-radius: 8px;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .chart-line {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .chart-line::before {
+            content: "";
+            position: absolute;
+            top: -60px;
+            left: 30%;
+            width: 40%;
+            height: 60px;
+            background: linear-gradient(45deg, var(--primary-color), #667eea);
+            border-radius: 8px;
+        }
+
+        .data-metrics {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .metric-item {
+            text-align: center;
+            flex: 1;
+        }
+
+        .metric-number {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+        }
+
+        .metric-label {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .dashboard-visual {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .dashboard-title {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: var(--secondary-color);
+            padding: 16px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 4px;
+        }
+
+        .stat-name {
+            font-size: 12px;
+            color: var(--text-gray);
+        }
+
+        .progress-section {
+            margin-top: 20px;
+        }
+
+        .progress-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .progress-bar {
+            width: 60%;
+            height: 6px;
+            background: var(--border-color);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            border-radius: 3px;
+        }
+
+        /* Brand Story - 品牌故事
+ * 展示品牌历史和价值观
+ * 使用三个卡片展示不同方面的品牌信息
+ * 每个卡片包含标题、内容和独特的视觉设计
+ */
+        .brand-story {
+            padding: 80px 0;
+            background: var(--white);
+        }
+
+        .brand-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .brand-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .brand-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .brand-card:nth-child(2) .brand-header {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .brand-header {
+            background: var(--secondary-color);
+            padding: 60px 32px;
+            text-align: center;
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .brand-content {
+            padding: 32px;
+        }
+
+        .brand-content h4 {
+            font-size: 18px;
+            margin-bottom: 16px;
+        }
+
+        .brand-content p {
+            color: var(--text-gray);
+            line-height: 1.6;
+        }
+
+        /* Partners - 合作企业展示
+ * 展示主要合作伙伴的logo墙
+ * 使用响应式网格布局
+ * 包含悬停动画效果和边框装饰
+ */
+        .partners {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .partners-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 60px;
+            margin-top: 60px;
+            justify-items: center;
+            align-items: center;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .partner-logo {
+            height: 100px;
+            background-position: center;
+            background-size: 80% auto;
+            background-repeat: no-repeat;
+            transition: all 0.3s;
+            width: 100%;
+            max-width: 280px;
+            padding: 40px;
+            border: 4px solid var(--border-color);
+            border-radius: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .partner-logo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+            border-width: 5px;
+        }
+
+        .partner-logo-1 {
+            background-image: url('img/partner1.png');
+        }
+
+        .partner-logo-2 {
+            background-image: url('img/partner2.png');
+        }
+
+        .partner-logo-3 {
+            background-image: url('img/partner4.png');
+        }
+
+        .partner-logo-4 {
+            background-image: url('img/partner5.png');
+        }
+
+        .partner-logo-5 {
+            background-image: url('img/partner6.png');
+        }
+
+        .partner-logo-6 {
+            background-image: url('img/partner7.png');
+        }
+
+        .partner-logo-7 {
+            background-image: url('img/partner8.png');
+        }
+
+        .partner-logo-8 {
+            background-image: url('img/partner9.png');
+        }
+
+        .partner-logo-9 {
+            background-image: url('img/partner10.png');
+        }
+
+        .partner-logo-10 {
+            background-image: url('img/partner11.png');
+        }
+
+        .partner-logo-11 {
+            background-image: url('img/partner12.png');
+        }
+
+        .partner-logo-12 {
+            background-image: url('img/partner13.png');
+        }
+
+        .cta-section {
+            padding: 80px 0;
+        }
+
+        .cta-section .container {
+            background-color: #f0f7ff;
+            border-radius: 24px;
+            padding: 60px;
+            margin: 0 auto;
+            max-width: 1200px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+        }
+
+        .cta-content {
+            flex: 1;
+        }
+
+        .cta-image {
+            flex: 1;
+            max-width: 500px;
+            height: 300px;
+            background-image: url('img/cta-image.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .cta-section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .cta-section p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-gray);
+            margin-bottom: 30px;
+        }
+
+        /* FAQ Section - 常见问题
+ * 手风琴式展示常见问题和答案
+ * 包含展开/收起的交互效果
+ * 使用简洁的问答布局
+ */
+        .faq-section {
+            background-color: white;
+            padding: 100px 0;
+        }
+
+        .faq-list {
+            margin-top: 60px;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .faq-item {
+            padding: 30px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .faq-item:first-child {
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .faq-question {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-color);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .faq-question::after {
+            content: "+";
+            font-size: 24px;
+            color: var(--text-gray);
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-question::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            margin-top: 20px;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-gray);
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* Footer - 页面底部
+ * 包含公司信息、导航链接和版权信息
+ * 使用网格布局分为多个内容区域
+ * 包含社交媒体链接和友情链接
+ */
+        .footer {
+            background-color: white;
+            padding: 80px 0 40px;
+            color: var(--text-color);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 60px;
+            margin-bottom: 60px;
+        }
+
+        .footer h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: var(--text-color);
+        }
+
+        .footer p {
+            color: var(--text-gray);
+            margin-bottom: 12px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 16px;
+            margin-top: 24px;
+        }
+
+        .social-link {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--text-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid #e5e7eb;
+            text-align: left;
+        }
+
+        .footer-bottom p {
+            color: var(--text-gray);
+            font-size: 14px;
+        }
+
+        .footer-bottom a {
+            color: var(--text-gray);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-bottom a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive - 响应式布局适配
+ * 针对移动设备的布局调整
+ * 包含导航菜单、网格布局的响应式变化
+ * 确保在小屏幕设备上的良好显示效果
+ */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 36px;
+            }
+
+            .feature-row {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .feature-row:nth-child(even) .feature-content,
+            .feature-row:nth-child(even) .feature-visual {
+                order: initial;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+        }
+
+        .hero-text .btn-container {
+            display: flex;
+            align-items: flex-start;
+            margin-top: 60px;
+        }
+
+        .consultation-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .consultation-box {
+            background-color: var(--primary-color);
+            border-radius: 24px;
+            padding: 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+            color: white;
+        }
+
+        .consultation-title, .consultation-subtitle {
+            font-size: 48px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .consultation-title {
+            margin-bottom: 15px;
+        }
+
+        .consultation-subtitle {
+            margin-bottom: 60px;
+            opacity: 0.9;
+        }
+
+        .btn-dark {
+            background-color: #000000;
+            color: white;
+            padding: 16px 40px;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+
+        .btn-dark:hover {
+            background-color: #1a1a1a;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav container">
+            <div class="logo"></div>
+            <ul class="nav-menu">
+                <li><a href="#home">首页</a></li>
+                <li><a href="#products">产品服务</a></li>
+                <li><a href="#team">团队介绍</a></li>
+                <li><a href="#news">新闻动态</a></li>
+                <li><a href="#contact">联系我们</a></li>
+            </ul>
+            <div class="nav-buttons">
+                                        <a href="#" class="btn btn-outline">注册</a>
+                        <a href="#" class="btn btn-login">登录</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>创新<span class="highlight">驱动</span>未来<br>改善永无止境</h1>
+                    <p>文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案</p>
+                                          <div class="btn-container">
+                            <a href="#" class="btn btn-primary">免费体验</a>
+                            <div class="user-verification">
+                                <div class="verification-text">
+                                    <span class="verification-number">百万</span>用户认证
+                                </div>
+                                <div class="user-avatars"></div>
+                            </div>
+                        </div>
+                </div>
+                <div class="hero-image">
+                    <div class="business-woman">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="why-choose">
+        <div class="container">
+            <h2 class="section-title">为什么选择我们？</h2>
+            <p class="section-subtitle">文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案文案</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon feature-icon-1"></div>
+                    <h3 class="feature-title">标题文案</h3>
+                    <p class="feature-desc">模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon feature-icon-2"></div>
+                    <h3 class="feature-title">标题文案</h3>
+                    <p class="feature-desc">模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon feature-icon-3"></div>
+                    <h3 class="feature-title">标题文案</h3>
+                    <p class="feature-desc">模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Features -->
+    <section class="product-features" id="products">
+        <div class="container">
+            <div class="feature-row">
+                <div class="feature-visual feature-visual-1"></div>
+                <div class="feature-content">
+                    <div class="feature-item primary">
+                        <h3>标题文案标题文案</h3>
+                        <p>模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>标题文案标题文案</h3>
+                        <p>模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>标题文案标题文案</h3>
+                        <p>模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案</p>
+                    </div>
+                </div>
+            </div>
+            <div class="feature-row">
+                <div class="feature-visual feature-visual-2"></div>
+                <div class="feature-content">
+                    <div class="feature-item primary">
+                        <h3>标题文案标题文案</h3>
+                        <p>模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>标题文案标题文案</h3>
+                        <p>模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案</p>
+                    </div>
+                    <div class="feature-item">
+                        <h3>标题文案标题文案</h3>
+                        <p>模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Story -->
+    <section class="brand-story">
+        <div class="container">
+            <h2 class="section-title">品牌故事</h2>
+            <div class="brand-grid">
+                <div class="brand-card">
+                    <div class="brand-header">MODAO</div>
+                    <div class="brand-content">
+                        <h4>标题文案</h4>
+                        <p>模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案</p>
+                    </div>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-header">MODAO</div>
+                    <div class="brand-content">
+                        <h4>标题文案</h4>
+                        <p>模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案</p>
+                    </div>
+                </div>
+                <div class="brand-card">
+                    <div class="brand-header">MODAO</div>
+                    <div class="brand-content">
+                        <h4>标题文案</h4>
+                        <p>模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners -->
+    <section class="partners">
+        <div class="container">
+            <h2 class="section-title">合作企业</h2>
+            <div class="partners-grid">
+                <div class="partner-logo partner-logo-1"></div>
+                <div class="partner-logo partner-logo-2"></div>
+                <div class="partner-logo partner-logo-3"></div>
+                <div class="partner-logo partner-logo-1"></div>
+                <div class="partner-logo partner-logo-4"></div>
+                <div class="partner-logo partner-logo-5"></div>
+                <div class="partner-logo partner-logo-6"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>立即加入我们！！</h2>
+                <p>模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案</p>
+                <a href="#" class="btn btn-primary">免费体验</a>
+            </div>
+            <div class="cta-image"></div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="section-title">常见问题</h2>
+            <div class="faq-list">
+                <div class="faq-item active">
+                    <div class="faq-question">问题文案问题文案问题文案？</div>
+                    <div class="faq-answer">
+                        <p>模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">问题文案问题文案问题文案问题文案问题问题文案？</div>
+                    <div class="faq-answer">
+                        <p>模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">问题文案问题文案问题文案问题文案？</div>
+                    <div class="faq-answer">
+                        <p>模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案模块说明文案</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Consultation Section -->
+    <section class="consultation-section">
+        <div class="consultation-box">
+            <div class="consultation-title">我们将为您提供最完美的</div>
+            <div class="consultation-subtitle">解决方案</div>
+            <a href="#" class="btn-dark">立即咨询</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>xxxxxxxxxxxx有限公司</h4>
+                    <p>地址：北京市朝阳区三元桥时间国际大厦5号楼</p>
+                    <p>电话：010-00000000</p>
+                    <p>邮箱：support@modao.cc</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">微</a>
+                        <a href="#" class="social-link">微</a>
+                        <a href="#" class="social-link">T</a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>企业介绍</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">品牌介绍</a></li>
+                        <li><a href="#">团队介绍</a></li>
+                        <li><a href="#">关于我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>服务范围</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">产品介绍</a></li>
+                        <li><a href="#">新闻动态</a></li>
+                        <li><a href="#">服务范围</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>友情链接：百度 | 新浪 | 网易</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const faqItem = question.parentElement;
+                const isActive = faqItem.classList.contains('active');
+                
+                // Close all FAQ items
+                document.querySelectorAll('.faq-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    faqItem.classList.add('active');
+                }
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.background = 'var(--white)';
+                header.style.backdropFilter = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
